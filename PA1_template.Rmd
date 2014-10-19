@@ -28,21 +28,14 @@ activity_raw$time<-as.POSIXct(paste(activity_raw$date,activity_raw$interval,sep 
 
 ```{r message=FALSE, results='hide'}
 library(dplyr)
-```
-```{r}
-activity_date<-group_by(activity_raw,date)
-date_mean<-summarise(activity_date,steps=mean(steps))
-head(date_mean)
-date_median<-summarise(activity_date,steps=median(steps))
-head(date_median)
-```
-
-```{r results='hide'}
 library(ggplot2)
 ```
 ```{r warning=FALSE,fig.width=10}
+activity_date<-group_by(activity_raw,date)
 date_total<-summarise(activity_date,steps=sum(steps))
 ggplot(date_total)+geom_bar(aes(x=date,y=steps),stat = 'identity')+xlab('Date')+ylab('Total Steps')+ggtitle('Daily Steps (total)')
+mean(date_total$steps,na.rm = T)
+median(date_total$steps,na.rm = T)
 ```
 
 
